@@ -1,0 +1,23 @@
+{
+  "name": "dsl-generated dependencies",
+  "dependencies": {
+    "jquery": "1.10.1",
+    "angular": "latest",
+    "angular-resource": "latest",
+    "bootstrap-datepicker": "latest",
+    "jquery-ui": "latest",
+    "bootstrap-switch": "latest",
+    "jquery.slimscroll": "latest",
+    "blockui": "latest",
+    "jquery-backstretch": "latest",
+    "js-cookie": "latest",
+    "jquery.uniform": "latest",
+    "toastr": "latest",
+    "selectize": "latest",
+    "simple-line-icons": "latest",
+    "bootstrap-daterangepicker": "latest"
+  },
+  "resolutions": {
+    "jquery": ">=1.10"
+  }
+}
