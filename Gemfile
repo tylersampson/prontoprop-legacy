@@ -79,5 +79,4 @@ group :development do
   gem 'capistrano-rails'
   gem 'capistrano-rbenv', github: "capistrano/rbenv"
   gem 'capistrano-unicorn-nginx'
-  gem 'capistrano-bower'
 end
