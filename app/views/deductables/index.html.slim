@@ -1,0 +1,42 @@
+- content_for :title, I18n.t('listing', name: Deductable.model_name.human)
+- content_for :actions do
+  = link_to(icon('plus', I18n.t('new')), new_deductable_path, class: 'btn btn-primary btn-fit-height') if can? :create, Deductable
+- content_for :breadcrumbs do
+  li = Deductable.model_name.human(count: 2)
+.table-actions
+  .search
+    = search_form_for @q, html: { class: 'form-inline' } do |f|
+      .form-group
+        = f.text_field :code_cont, class: 'form-control', placeholder: Deductable.human_attribute_name(:code)
+      .form-group
+        = f.text_field :name_cont, class: 'form-control', placeholder: Deductable.human_attribute_name(:name)      
+      = f.submit I18n.t('search'), class: 'btn btn-primary'
+      = link_to I18n.t('reset'), '?', class: 'btn btn-default'
+  .table-navigation
+    = page_entries_info @deductables
+    = will_paginate @deductables, renderer: BootstrapPagination::Rails, class: 'pagination-sm pull-right', style: 'margin: 0px'
+.panel.panel-default
+  table.table.table-hover.table-bordered
+    thead
+      tr
+        - if can? :update, Deductable
+          th.text-center style="width:95px;" = I18n.t('actions')
+        th = sort_link(@q, :code, Deductable.human_attribute_name(:code))
+        th = sort_link(@q, :name, Deductable.human_attribute_name(:name))
+        th.text-right = sort_link(@q, :unit_price, Deductable.human_attribute_name(:unit_price))
+    tbody
+      - @deductables.each do |deductable|
+        tr
+          - if can? :update, Deductable
+            td.text-right
+              .btn-group
+                = link_to I18n.t('edit'), edit_deductable_path(deductable), class: 'btn btn-default btn-sm'
+                button.btn.btn-default.btn-sm.dropdown-toggle data-toggle="dropdown"
+                  span.caret
+                ul.dropdown-menu.pull-right
+                  li = link_to icon('pencil', I18n.t('edit')), edit_deductable_path(deductable)
+                  - if can? :destroy, deductable
+                    li = link_to icon('times font-red', I18n.t('delete')), deductable_path(deductable), method: :delete, data: { confirm: 'Are you sure?' }
+          td = link_to deductable.code, deductable_path(deductable)
+          td = link_to deductable.name, deductable_path(deductable)
+          td.text-right = number_with_precision(deductable.unit_price, precision: 2, strip_insignificant_zeros: true)

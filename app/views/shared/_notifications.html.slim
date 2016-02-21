@@ -1,0 +1,12 @@
+li.dropdown.dropdown-extended.dropdown-notification.dropdown-dark data-behavior="notifications"
+  a.dropdown-toggle href="#" data-toggle="dropdown" data-close-others="true"
+    = icon('bell-o')
+    span.badge.badge-default data-behavior="notifications-count" 0
+  ul.dropdown-menu
+    li.external
+      h3
+        | You have &nbsp;
+        span.bold data-behavior="notifications-count" 0
+      = link_to 'View All', '#'
+    li
+      ul.dropdown-menu-list.scroller style="height: 250px;"

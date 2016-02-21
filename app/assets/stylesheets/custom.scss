@@ -1,0 +1,148 @@
+
+$nprogress-color: #00b1ff;
+$nprogress-height: 2px;
+$nprogress-zindex: 10100;
+
+@import 'nprogress';
+@import 'nprogress-bootstrap';
+
+#nprogress .spinner {
+  left: 120px;
+  top: 25px;
+  right: auto;
+}
+
+.panel.panel-default {
+  box-shadow: 0px 0px 5px 0px rgba(36,43,46,0.07),0px 1px 2px 0px rgba(36,43,46,0.2) !important;
+
+  table {
+    th {
+      border-bottom: 1px solid #ddd;
+    }
+
+    img {
+      border-radius: 8px;
+    }
+  }
+}
+
+td > .btn-group, td > .btn {
+  margin-top: -5px !important;
+  margin-bottom: -5px !important;
+}
+
+.selectize-input {
+  vertical-align: middle;
+  min-width: 200px;
+}
+
+table .btn-group .btn:first-child {
+  margin-right: 0px;
+}
+
+table .btn-group .btn:last-child {
+  margin-right: 10px;
+}
+
+.form-actions {
+  text-align: center;
+}
+
+.page-bar {
+  margin-bottom: 15px !important;
+}
+
+.btn + .btn {
+  margin-left: 10px;
+}
+
+.table.table-details {
+  td:first-child {
+    width: 40%;
+    min-width: 40%;
+    text-align: right;
+    font-weight: bold;
+  }
+
+  tr:first-child td {
+    border-top: 0;
+  }
+
+  margin-bottom: 0;
+}
+
+.table-actions {
+  @extend .clearfix;
+
+  margin: -5px 0px 10px 0px;
+
+  .search {
+    float: left;
+
+    .form-group {
+      margin-right: 15px;
+    }
+  }
+
+  .table-navigation {
+    float: right;
+    margin-top: 3px;
+  }
+}
+
+.page-toolbar.bulk-actions {
+  margin-right: 10px;
+}
+
+.page-bar .page-toolbar .btn-fit-height {
+  border-radius: 0;
+
+  &:last-child {
+    border-radius: 0 4px 4px 0;
+  }
+}
+
+.form-inline {
+  .checkbox {
+    label {
+      margin-left: 5px;
+    }
+  }
+}
+
+ul.page-breadcrumb {
+  li:after {
+    @include fa-icon();
+    content: "\f111";
+    font-size: 5px;
+    vertical-align: middle;
+    margin: 0 5px;
+    color: #ccc;
+  }
+
+  li:last-child:after {
+    display: none;
+  }
+}
+
+label.required:after {
+  content:" *";
+  color: purple;
+}
+
+.form-actions {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 195px;
+  z-index: 100000;  
+  border-top: 1px solid #999 !important;
+}
+
+.page-sidebar-closed .form-actions {
+  left: 54px;
+}
+
+.page-content {
+  padding-bottom: 75px !important;
+}

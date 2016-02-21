@@ -1,0 +1,49 @@
+= bootstrap_form_for @property, layout: :horizontal, label_col: 'col-md-4', control_col: 'col-md-8' do |f|
+  .row
+    .col-md-6
+      .portlet.box.blue
+        .portlet-title
+          .caption
+            span.caption-subject.font-dark.bold.uppercase = Property.model_name.human
+        .portlet-body.form
+          .form-body
+            = f.text_field :code
+            = f.text_field :name            
+            = f.select :listing_type, ['Sale', 'Rental']
+            = f.text_field :external_id           
+          .form-actions.fluid
+            = link_to icon('arrow-left', I18n.t('cancel')), properties_path, class: 'btn btn-default'
+            = button_tag type: :submit, name: :commit, class: 'btn btn-success' do
+              = icon('check', I18n.t('save'))
+            - if @property.new_record?
+              = button_tag type: :submit, name: :commit_and_new, class: 'btn btn-info' do
+                = icon('check', I18n.t('save_and_new')) 
+      .portlet.box.grey
+        .portlet-title
+          .caption
+            span.caption-subject.font-dark.bold.uppercase = Address.model_name.human
+        .portlet-body.form
+          .form-body
+            = f.fields_for :address do |builder|
+              = render 'addresses/fields', f: builder 
+              
+    .col-md-6
+      .portlet.box.purple
+        .portlet-title
+          .caption
+            span.caption-subject.font-dark.bold.uppercase = Agent.model_name.human(count: 2)
+        .portlet-body.form
+          .form-body
+            = f.fields_for :agent_properties do |builder|
+              = render 'properties/agent_property_fields', f: builder
+            = link_to_add_fields 'Add agents', f, :agent_properties
+      
+      .portlet.box.grey
+        .portlet-title
+          .caption
+            span.caption-subject.font-dark.bold.uppercase = Property.human_attribute_name(:owner_id)
+        .portlet-body.form
+          .form-body
+            = f.fields_for :owner do |builder|
+              = render 'contacts/fields', f: builder
+      

@@ -1,0 +1,9 @@
+.page-bar
+  ul.page-breadcrumb
+    == yield :breadcrumbs
+
+  .page-toolbar
+    == yield :actions
+
+  .page-toolbar.bulk-actions
+    == yield :bulk_actions

@@ -1,0 +1,9 @@
+li.dropdown.dropdown-user
+  = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown', 'close-others' => true } do
+    = image_tag avatar_url(current_user&.email, 50), class: 'img-circle'
+    span.username.username-hide-on-mobile #{current_user&.email}
+    = icon('angle-down')
+  ul.dropdown-menu.dropdown-menu-default
+    li = link_to icon('user', 'My Profile'), '#'
+    li.divider
+    li = link_to icon('sign-out', 'Sign out'), destroy_user_session_path, method: :delete

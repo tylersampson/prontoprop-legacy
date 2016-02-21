@@ -1,0 +1,26 @@
+= bootstrap_form_for @<%= singular_table_name %>, layout: :horizontal, label_col: 'col-md-4', control_col: 'col-md-8' do |f|
+  .row
+    <%= attributes.count < 10 ? '.col-md-8.col-md-offset-2.col-lg-6.col-lg-offset-3' : '.col-lg-12' %>
+      .portlet.box.blue
+        .portlet-title
+          .caption
+            span.caption-subject.font-dark.bold.uppercase = <%= class_name %>.model_name.human
+        .portlet-body.form
+          .form-body
+          <%- attributes.each do |attribute| -%>
+          <%- if attribute.reference? -%>
+            = f.select :<%= attribute.name %>_id, options_for_selectize(@<%= singular_table_name %>.<%= attribute.name %>), { include_blank: "<%= attribute.name.humanize %>" }, data: { remote: <%= attribute.name.pluralize %>_path, search: 'name_cont', fields: ['name'], label: 'name', value: 'id' }
+          <%- elsif attribute.field_type == :check_box -%>
+            = f.form_group do
+              = f.<%= attribute.field_type %> :<%= attribute.name %>
+          <%- else -%>
+            = f.<%= attribute.field_type %> :<%= attribute.name %>
+          <%- end -%>
+          <%- end -%>
+          .form-actions.fluid
+            = link_to icon('arrow-left', I18n.t('cancel')), <%= index_helper %>_path, class: 'btn btn-default'
+            = button_tag type: :submit, name: :commit, class: 'btn btn-success' do
+              = icon('check', I18n.t('save'))
+            - if @<%= singular_table_name %>.new_record?
+              = button_tag type: :submit, name: :commit_and_new, class: 'btn btn-info' do
+                = icon('check', I18n.t('save_and_new'))

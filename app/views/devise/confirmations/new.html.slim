@@ -1,0 +1,10 @@
+h1 Resend Confirmation Instructions
+p If your email address has changed since signup, please contact us.
+= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
+  = devise_error_messages!
+  = f.email_field :email, autofocus: true, placeholder: 'Email', class: 'form-control form-group form-control-solid'
+
+  = button_tag type: :submit, class: 'btn blue' do
+    = icon('sign-in', 'Resend confirmation instructions')
+
+= render "devise/shared/links"

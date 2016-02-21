@@ -1,0 +1,25 @@
+en:
+  edit: 'Edit'
+  new: 'New'
+  creating: 'Creating %{name}'
+  editing: 'Editing %{name}'
+  showing: 'Showing %{name}'
+  listing: 'Listing %{name}'
+  list: 'List'
+  show: 'Show'
+  reset: 'Reset'
+  search: 'Search'
+  save: 'Save'
+  save_and_new: 'Save and New'
+  cancel: 'Cancel'
+  delete: 'Delete'
+  actions: 'Actions'
+  print: 'Print'
+  
+  number:
+    currency: 
+      format:
+        unit: 'R '
+        delimiter: ' '
+        separator: '.'
+        precision: 2

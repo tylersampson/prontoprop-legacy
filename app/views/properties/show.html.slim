@@ -1,0 +1,100 @@
+- content_for :title, I18n.t('showing', name: 'property')
+- content_for :actions do
+  = link_to icon('list-alt', I18n.t('list')), properties_path, class: 'btn btn-default btn-fit-height'
+  = link_to(icon('pencil', I18n.t('edit')), edit_property_path(@property), class: 'btn btn-primary btn-fit-height') if can? :update, @property
+- content_for :breadcrumbs do
+  li = link_to Property.model_name.human(count: 2), properties_path
+  li = @property.code
+
+.row
+  .col-md-6
+    .portlet.box.blue
+      .portlet-title
+        .caption
+          span.caption-subject.font-dark.bold.uppercase = Property.model_name.human
+      .portlet-body.form
+        table.table.table-condensed.table-details
+          tbody
+            tr
+              td Code:
+              td = @property.code
+            tr
+              td Name:
+              td = @property.name
+            tr
+              td Listing type:
+              td = @property.listing_type
+            tr
+              td External:
+              td = @property.external_id
+    .portlet.box.grey
+      .portlet-title
+        .caption
+          span.caption-subject.font-dark.bold.uppercase = Address.model_name.human
+      .portlet-body.form
+        table.table.table-condensed.table-details
+          tbody
+            tr
+              td Unit:
+              td = @property.address.unit
+            tr
+              td Complex:
+              td = @property.address.complex
+            tr
+              td Street No:
+              td = @property.address.street_no
+            tr
+              td Street:
+              td = @property.address.street_name
+            tr
+              td Crossing:
+              td = @property.address.crossing_street
+            tr
+              td Suburb:
+              td = @property.address.suburb
+            tr
+              td City:
+              td = @property.address.city
+            tr
+              td Country:
+              td = @property.address.country
+            tr
+              td Code:
+              td = @property.address.code
+  .col-md-6
+    .portlet.box.purple
+      .portlet-title
+        .caption
+          span.caption-subject.font-dark.bold.uppercase = Agent.model_name.human(count: 2)
+      .portlet-body.form
+        table.table.table-condensed style="margin-bottom: 0"
+          thead
+            tr
+              th style="width: 50%"
+                | Agent
+              th %
+          tbody
+            - @property.agent_properties.each do |ap|
+              tr
+                td = ap.agent.name
+                td = ap.commission_percent
+                  
+    .portlet.box.grey
+      .portlet-title
+        .caption
+          span.caption-subject.font-dark.bold.uppercase = Property.human_attribute_name(:owner_id)
+      .portlet-body.form
+        table.table.table-condensed.table-details
+          tbody
+            tr
+              td Name:
+              td = @property.cached_owner.name
+            tr
+              td Email:
+              td = @property.cached_owner.email
+            tr
+              td Mobile:
+              td = @property.cached_owner.mobile
+            tr
+              td Telephone:
+              td = @property.cached_owner.telephone

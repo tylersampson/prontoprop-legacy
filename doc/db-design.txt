@@ -1,0 +1,123 @@
+address
+  unit
+  complex
+  street_no
+  street_name
+  crossing_street
+  suburb
+  city
+  country
+  code
+
+contact
+  first_name
+  last_name
+  email
+  mobile
+  telephone
+  
+attorneys
+  code
+  name
+  email
+  telephone
+  
+attorneys_contacts
+
+originators
+  code
+  name
+  email
+  telephone
+  
+originators_contacts
+
+statuses
+  name
+  access
+
+status_workflow
+  start_status
+  end_status
+
+properties  
+  code
+  name
+  owner
+  listing_type
+  external_id
+  
+agent
+  code
+  first_name
+  last_name
+  id_number
+  email
+  mobile
+  tax_percent
+
+agents_properties
+  agent
+  property
+  commission_percent
+
+sale
+  code
+  property
+  buyer
+  purchase_price
+  deposit_amount
+  deposit_due
+  attorney
+  bond_attorney
+  bond_due
+  originator
+  external_id
+  commission
+  vat
+  nett_commission
+
+sales_statuses
+  sale
+  status
+  user
+  date
+  comments
+
+lease
+  property
+  managed?
+  start_on
+  end_on
+  deposit_amount
+  deposit_held_by
+  lease_fee
+  inspection_fee
+  credit_check_fee
+  deposit_released_on
+  deposit_released_to
+
+rental
+  lease
+  date
+  amount
+  commission
+  vat
+  nett_commission
+  
+commission
+  commissionable
+  agent
+  gross_amount
+  total_tax
+  total_deductions
+  nett_due
+  paid_on
+  
+deductables
+  sale
+  agent
+  deduction_item
+  amount
+
+

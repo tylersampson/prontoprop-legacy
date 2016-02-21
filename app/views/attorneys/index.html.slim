@@ -1,0 +1,36 @@
+- content_for :title, I18n.t('listing', name: Attorney.model_name.human)
+- content_for :actions do
+  = link_to(icon('plus', I18n.t('new')), new_attorney_path, class: 'btn btn-primary btn-fit-height') if can? :create, Attorney
+- content_for :breadcrumbs do
+  li = Attorney.model_name.human(count: 2)
+.table-actions
+  .table-navigation
+    = page_entries_info @attorneys
+    = will_paginate @attorneys, renderer: BootstrapPagination::Rails, class: 'pagination-sm pull-right', style: 'margin: 0px'
+.panel.panel-default
+  table.table.table-hover.table-bordered
+    thead
+      tr
+        - if can? :update, Attorney
+          th.text-center style="width:95px;" = I18n.t('actions')
+        th = sort_link(@q, :code, Attorney.human_attribute_name(:code))
+        th = sort_link(@q, :name, Attorney.human_attribute_name(:name))
+        th = sort_link(@q, :email, Attorney.human_attribute_name(:email))
+        th = sort_link(@q, :telephone, Attorney.human_attribute_name(:telephone))
+    tbody
+      - @attorneys.each do |attorney|
+        tr
+          - if can? :update, Attorney
+            td.text-right
+              .btn-group
+                = link_to I18n.t('edit'), edit_attorney_path(attorney), class: 'btn btn-default btn-sm'
+                button.btn.btn-default.btn-sm.dropdown-toggle data-toggle="dropdown"
+                  span.caret
+                ul.dropdown-menu.pull-right
+                  li = link_to icon('pencil', I18n.t('edit')), edit_attorney_path(attorney)
+                  - if can? :destroy, attorney
+                    li = link_to icon('times font-red', I18n.t('delete')), attorney_path(attorney), method: :delete, data: { confirm: 'Are you sure?' }
+          td = link_to attorney.code, attorney_path(attorney)
+          td = link_to attorney.name, attorney_path(attorney)
+          td = attorney.email
+          td = attorney.telephone

@@ -1,0 +1,10 @@
+- content_for :title, I18n.t('editing', name: '<%= singular_table_name %>')
+- content_for :actions do
+  = link_to icon('list-alt', I18n.t('list')), <%= index_helper %>_path, class: 'btn btn-default btn-fit-height'
+  = link_to icon('info-circle', I18n.t('show')), @<%= singular_table_name %>, class: 'btn btn-primary btn-fit-height'
+- content_for :breadcrumbs do
+  li = link_to <%= class_name %>.model_name.human(count: 2), <%= index_helper %>_path
+  li = link_to @<%= singular_table_name %>.<%= attributes.first.name %>, @<%= singular_table_name %>
+  li = I18n.t('editing', name: '<%= singular_table_name %>')
+
+= render 'form'

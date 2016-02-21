@@ -1,0 +1,78 @@
+= bootstrap_form_for @sale, layout: :horizontal, label_col: 'col-md-4', control_col: 'col-md-8' do |f|
+  .row data-behavior="sale"
+    .col-md-6
+      .portlet.box.blue
+        .portlet-title
+          .caption
+            span.caption-subject.font-dark.bold.uppercase = Sale.model_name.human
+        .portlet-body.form
+          .form-body
+            = f.text_field :code
+            = f.hidden_field :property_id
+            = f.static_control label: "Property" do
+              = @sale.property.name
+            = f.date_select :contract_start_on, {:include_blank => true, :default => nil}
+            
+            = f.select :buyer_id, options_for_selectize(@sale.buyer), { include_blank: "Buyer" }, data: { remote: contacts_path, search: 'name_cont', fields: ['name'], label: 'name', value: 'id' }
+            = f.text_field :purchase_price
+            = f.text_field :deposit_amount
+            = f.date_select :deposit_due_on, {:include_blank => true, :default => nil}
+            = f.select :attorney_id, options_for_selectize(@sale.attorney), { include_blank: "Attorney" }, data: { remote: attorneys_path, search: 'name_cont', fields: ['name'], label: 'name', value: 'id' }
+            = f.select :bond_attorney_id, options_for_selectize(@sale.bond_attorney), { include_blank: "Bond attorney" }, data: { remote: attorneys_path, search: 'name_cont', fields: ['name'], label: 'name', value: 'id' }
+            = f.date_select :bond_due_on, {:include_blank => true, :default => nil}
+            = f.select :originator_id, options_for_selectize(@sale.originator), { include_blank: "Originator" }, data: { remote: originators_path, search: 'name_cont', fields: ['name'], label: 'name', value: 'id' }
+            = f.text_field :external_id
+            = f.collection_select :status_id, Status.all, :id, :name
+            = f.date_select :registered_on, {:include_blank => true, :default => nil}
+            = f.select :bank_id, options_for_selectize(@sale.bank), { include_blank: "Bank" }, data: { remote: banks_path, search: 'name_cont', fields: ['name'], label: 'name', value: 'id' }
+            = f.text_field :grant_amount
+            
+
+          .form-actions.fluid.fixed
+            = link_to icon('arrow-left', I18n.t('cancel')), sales_path, class: 'btn btn-default'
+            = button_tag type: :submit, name: :commit, class: 'btn btn-success' do
+              = icon('check', I18n.t('save'))
+            - if @sale.new_record?
+              = button_tag type: :submit, name: :commit_and_new, class: 'btn btn-info' do
+                = icon('check', I18n.t('save_and_new'))
+                
+      .portlet.box.purple
+        .portlet-title
+          .caption
+            span.caption-subject.font-dark.bold.uppercase = Comment.model_name.human(count: 2)
+        .portlet-body
+          table.table.table-hover.table-condensed
+            thead
+              tr
+                th User
+                th Date
+                th Comments
+            tbody
+              - @sale.comments.each do |c|
+                tr
+                  td = c.user&.name
+                  td = c.event_on
+                  td = c.comments
+                  
+          = link_to_add_fields 'Add comment', f, :comments
+            
+    .col-md-6
+      .portlet.box.purple
+        .portlet-title
+          .caption
+            span.caption-subject.font-dark.bold.uppercase = Sale.human_attribute_name(:commission)
+        .portlet-body.form
+          .form-body
+            = f.text_field :commission, data: { behavior: 'commission' }
+            = f.text_field :vat, readonly: true, data: { behavior: 'vat' } 
+            .form-group
+              label.control-label.col-sm-4 Nett commission
+              .col-sm-8
+                span.form-control readonly=true data-behavior="nett"
+      
+      = f.fields_for :commissions do |cf|
+        = render 'sales/commission_fields', f: cf
+        
+      
+                  
+          

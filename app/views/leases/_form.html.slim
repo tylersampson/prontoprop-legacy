@@ -1,0 +1,34 @@
+= bootstrap_form_for [@property, @lease], layout: :horizontal, label_col: 'col-md-4', control_col: 'col-md-8' do |f|
+  .row
+    .col-lg-12
+      .portlet.box.blue
+        .portlet-title
+          .caption
+            span.caption-subject.font-dark.bold.uppercase = Lease.model_name.human
+        .portlet-body.form
+          .form-body
+            = f.text_field :code           
+            = f.fields_for :lessor do |builder|
+              = render 'leases/lessor_fields', f: builder
+            = f.form_group do
+              = f.check_box :managed
+            = f.date_select :start_on
+            = f.date_select :end_on
+            = f.date_select :actual_end_on
+            = f.text_field :rent_amount
+            = f.text_field :deposit_amount
+            = f.text_field :deposit_held_by
+            = f.text_field :lease_fee
+            = f.text_field :inspection_fee
+            = f.text_field :credit_check_fee
+            = f.date_select :credit_check_fee_paid_on
+            = f.date_select :deposit_released_on
+            = f.text_field :deposit_released_to
+            = f.select :status_id, options_for_selectize(@lease.status), { include_blank: "Status" }, data: { remote: statuses_path, search: 'name_cont', fields: ['name'], label: 'name', value: 'id' }
+          .form-actions.fluid
+            = link_to icon('arrow-left', I18n.t('cancel')), property_leases_path, class: 'btn btn-default'
+            = button_tag type: :submit, name: :commit, class: 'btn btn-success' do
+              = icon('check', I18n.t('save'))
+            - if @lease.new_record?
+              = button_tag type: :submit, name: :commit_and_new, class: 'btn btn-info' do
+                = icon('check', I18n.t('save_and_new'))

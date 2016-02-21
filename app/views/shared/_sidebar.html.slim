@@ -1,0 +1,41 @@
+.page-sidebar-wrapper
+  .page-sidebar.navbar-collapse.collapse
+    ul.page-sidebar-menu.page-sidebar-menu-light data-auto-scroll="false" data-slide-speed="200"
+      li class="nav-item #{is_active_controller('dashboards')}"
+        = link_to root_path do
+          = icon('dashboard')
+          span.title Dashboard
+      li class="nav-item #{is_active_controller('properties')}"
+        = link_to properties_path do
+          = icon('home')
+          span.title Properties      
+      li class="nav-item #{is_active_controller('sales')}"
+        = link_to sales_path do
+          = icon('money')
+          span.title Sales
+      li class="nav-item #{is_active_controller('rentals')}"
+        = link_to rentals_path do
+          = icon('calendar')
+          span.title Rentals
+      li class="nav-item #{is_active_controller('agents')}"
+        = link_to agents_path do
+          = icon('users')
+          span.title Agents
+      li class="nav-item #{is_active_controller(%w{attorneys originators deductables statuses users })}"
+        = link_to '#', class: 'nav-link nav-toggle' do
+          = icon('wrench')
+          span.title Admin
+          span.arrow
+        ul.sub-menu
+          li class="nav-item #{is_active_controller('attorneys')}"
+            = link_to attorneys_path do
+              span.title Attorneys
+          li class="nav-item #{is_active_controller('originators')}"
+            = link_to originators_path do
+              span.title Originators
+          li class="nav-item #{is_active_controller('deductables')}"
+            = link_to deductables_path do
+              span.title Deductables
+          li class="nav-item #{is_active_controller('statuses')}"
+            = link_to statuses_path do
+              span.title Statuses

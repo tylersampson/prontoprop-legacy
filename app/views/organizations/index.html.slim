@@ -1,0 +1,36 @@
+- content_for :title, I18n.t('listing', name: Organization.model_name.human)
+- content_for :actions do
+  = link_to(icon('plus', I18n.t('new')), new_organization_path, class: 'btn btn-primary btn-fit-height') if can? :create, Organization
+- content_for :breadcrumbs do
+  li = Organization.model_name.human(count: 2)
+.table-actions
+  .search
+    = search_form_for @q, html: { class: 'form-inline' } do |f|
+      .form-group
+        = f.text_field :name_cont, class: 'form-control', placeholder: Organization.human_attribute_name(:name)
+      = f.submit I18n.t('search'), class: 'btn btn-primary'
+      = link_to I18n.t('reset'), '?', class: 'btn btn-default'
+  .table-navigation
+    = page_entries_info @organizations
+    = will_paginate @organizations, renderer: BootstrapPagination::Rails, class: 'pagination-sm pull-right', style: 'margin: 0px'
+.panel.panel-default
+  table.table.table-hover.table-bordered
+    thead
+      tr
+        - if can? :edit, Organization
+          th.text-center style="width:95px;" = I18n.t('actions')
+        th = sort_link(@q, :name, Organization.human_attribute_name(:name))
+    tbody
+      - @organizations.each do |organization|
+        tr
+          - if can? :edit, Organization
+            td.text-right
+              .btn-group
+                = link_to I18n.t('edit'), edit_organization_path(organization), class: 'btn btn-default btn-sm'
+                button.btn.btn-default.btn-sm.dropdown-toggle data-toggle="dropdown"
+                  span.caret
+                ul.dropdown-menu.pull-right
+                  li = link_to icon('pencil', I18n.t('edit')), edit_organization_path(organization)
+                  - if can? :destroy, organization
+                    li = link_to icon('times font-red', I18n.t('delete')), organization_path(organization), method: :delete, data: { confirm: 'Are you sure?' }
+          td = link_to organization.name, organization_path(organization)

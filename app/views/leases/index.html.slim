@@ -1,0 +1,42 @@
+- content_for :title, I18n.t('listing', name: Lease.model_name.human)
+- content_for :actions do
+  = link_to(icon('plus', I18n.t('new')), new_property_lease_path(@property), class: 'btn btn-primary btn-fit-height') if can? :create, Lease
+- content_for :breadcrumbs do
+  li = Lease.model_name.human(count: 2)
+.table-actions  
+  .table-navigation
+    = page_entries_info @leases
+    = will_paginate @leases, renderer: BootstrapPagination::Rails, class: 'pagination-sm pull-right', style: 'margin: 0px'
+.panel.panel-default
+  table.table.table-hover.table-bordered
+    thead
+      tr
+        - if can? :update, Lease
+          th.text-center style="width:95px;" = I18n.t('actions')
+        th = sort_link(@q, :code, Lease.human_attribute_name(:code))
+        th = sort_link(@q, :property, Lease.human_attribute_name(:property))        
+        th = sort_link(@q, :managed, Lease.human_attribute_name(:managed))   
+        th = sort_link(@q, :start_on, Lease.human_attribute_name(:start_on))
+        th = sort_link(@q, :end_on, Lease.human_attribute_name(:end_on))
+        th.text-right = sort_link(@q, :rent_amount, Lease.human_attribute_name(:rent_amount))
+        th = sort_link(@q, :status, Lease.human_attribute_name(:status))
+    tbody
+      - @leases.each do |lease|
+        tr
+          - if can? :update, Lease
+            td.text-right
+              .btn-group
+                = link_to I18n.t('edit'), edit_property_lease_path(@property, lease), class: 'btn btn-default btn-sm'
+                button.btn.btn-default.btn-sm.dropdown-toggle data-toggle="dropdown"
+                  span.caret
+                ul.dropdown-menu.pull-right
+                  li = link_to icon('pencil', I18n.t('edit')), edit_property_lease_path(@property, lease)
+                  - if can? :destroy, lease
+                    li = link_to icon('times font-red', I18n.t('delete')), property_lease_path(@property, lease), method: :delete, data: { confirm: 'Are you sure?' }
+          td = link_to lease.code, property_lease_path(@property, lease)
+          td = lease.property.name          
+          td.text-center = icon(lease.managed? ? 'check-circle text-success' : 'times-circle text-danger')
+          td = lease.start_on
+          td = lease.end_on
+          td.text-right = number_with_precision(lease.rent_amount, precision: 2, strip_insignificant_zeros: true)
+          td = lease.status&.name

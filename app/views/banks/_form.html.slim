@@ -1,0 +1,17 @@
+= bootstrap_form_for @bank, layout: :horizontal, label_col: 'col-md-4', control_col: 'col-md-8' do |f|
+  .row
+    .col-md-8.col-md-offset-2.col-lg-6.col-lg-offset-3
+      .portlet.box.blue
+        .portlet-title
+          .caption
+            span.caption-subject.font-dark.bold.uppercase = Bank.model_name.human
+        .portlet-body.form
+          .form-body
+            = f.text_field :name
+          .form-actions.fluid
+            = link_to icon('arrow-left', I18n.t('cancel')), banks_path, class: 'btn btn-default'
+            = button_tag type: :submit, name: :commit, class: 'btn btn-success' do
+              = icon('check', I18n.t('save'))
+            - if @bank.new_record?
+              = button_tag type: :submit, name: :commit_and_new, class: 'btn btn-info' do
+                = icon('check', I18n.t('save_and_new'))

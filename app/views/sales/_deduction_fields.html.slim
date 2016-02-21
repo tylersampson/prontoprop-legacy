@@ -1,0 +1,9 @@
+.row
+  .col-sm-2
+    = f.hidden_field :_destroy
+    = link_to icon('times text-red'), '#', class: 'btn btn-sm btn-danger remove_fields'
+  .col-sm-6      
+    = f.select :deductable_id, options_for_selectize(f.object.deductable), { include_blank: "Deductable" }, data: { remote: deductables_path, search: 'name_cont', fields: ['name'], label: 'name', value: 'id' }
+  .col-sm-4.text-right 
+    = f.text_field :amount, layout: :default, skip_label: true, placeholder: 'Amount'
+  

@@ -1,0 +1,15 @@
+h1 Reset Password
+p Enter your new password below
+= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+  = devise_error_messages!
+  = f.hidden_field :reset_password_token
+  - if @minimum_password_length
+      em #{@minimum_password_length} characters minimum
+      br
+  = f.password_field :password, autofocus: true, autocomplete: 'off', placeholder: 'Password', class: 'form-control form-group form-control-solid'
+  = f.password_field :password_confirmation, autocomplete: 'off', placeholder: 'Password', class: 'form-control form-group form-control-solid'
+
+  = button_tag type: :submit, class: 'btn blue' do
+    = icon('sign-in', 'Change My Password')
+
+= render "devise/shared/links"

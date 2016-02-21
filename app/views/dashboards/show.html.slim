@@ -1,0 +1,131 @@
+- content_for :title, "Dashboard"
+- content_for :actions do    
+  #reportrange.pull-right style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%"
+    = icon('calendar fa-fw')
+    span
+    b.caret
+    
+  = bootstrap_form_tag url: root_path, method: :get, layout: :inline do |f|    
+    = f.hidden_field :from, value: params[:from] || Date.today.beginning_of_month
+    = f.hidden_field :to, value: params[:to] || Date.today.end_of_month
+
+- if @sales.count == 0
+  .text-center style="margin-top:50px"
+    = icon('line-chart fa-4x')
+    br
+    | No Sales Data for period
+- else
+  .row
+    .col-md-6
+      .portlet.box.blue
+        .portlet-title
+          .caption
+            span.caption-subject.font-dark.bold.uppercase Intake Sales
+        .portlet-body.form
+          table.table.table-condensed.table-details
+            tbody
+              tr
+                td Intake - Sales
+                td = number_to_currency @sales.sum(:purchase_price)
+              tr
+                td No of Units
+                td = @sales.count
+              tr
+                td Preferred Origination
+                td = number_to_currency @sales.preferred_origination.sum(:purchase_price)
+              tr
+                td Preferred Origination %
+                td = @sales.preferred_origination.count * 100 / @sales.count
+              tr
+                td Preferred Attorneys
+                td = number_to_currency @sales.preferred_attorneys.sum(:purchase_price)
+              tr
+                td Preferred Attorneys %
+                td = @sales.preferred_attorneys.count * 100 / @sales.count
+    .col-md-6
+      .portlet.box.blue
+        .portlet-title
+          .caption
+            span.caption-subject.font-dark.bold.uppercase Intake Sales Breakdown
+        .portlet-body.form
+          table.table.table-condensed.table-details
+            thead
+              tr
+                th Originator
+                th Units
+                th %
+            tbody
+              - @preferred_originators.each do |originator|
+                tr
+                  td = originator.name
+                  td = originator.sales.count
+                  td = originator.sales.count * 100 / @sales.count
+  .row
+    .col-md-6
+      .portlet.box.green
+        .portlet-title
+          .caption
+            span.caption-subject.font-dark.bold.uppercase Granted Sales
+        .portlet-body.form
+          table.table.table-condensed.table-details
+            tbody
+              tr
+                td Granted - Total
+                td = number_to_currency @sales.granted.sum(:purchase_price)
+              tr
+                td No of Units
+                td = @sales.granted.count
+              tr
+                td Conversion rate ( Grant / Intake ) %
+                td = @sales.granted.count * 100 / @sales.count
+              tr
+                td Preferred Origination
+                td = number_to_currency @sales.granted.preferred_origination.sum(:purchase_price)
+              tr
+                td Preferred Origination %
+                td = @sales.granted.preferred_origination.count * 100 / @sales.count 
+              tr
+                td Preferred Attorneys
+                td = number_to_currency @sales.granted.preferred_attorneys.sum(:purchase_price)
+              tr
+                td Preferred Attorneys %
+                td = @sales.granted.preferred_attorneys.count * 100 / @sales.count
+    .col-md-6
+      .portlet.box.green
+        .portlet-title
+          .caption
+            span.caption-subject.font-dark.bold.uppercase Granted Sales Breakdown
+        .portlet-body.form
+          table.table.table-condensed.table-details
+            thead
+              tr
+                th Originator
+                th Units
+                th %
+            tbody
+              - @preferred_originators.each do |originator|
+                tr
+                  td = originator.name
+                  td = originator.sales.granted.count
+                  td = @sales.granted.count > 0 ? originator.sales.granted.count * 100 / @sales.granted.count : 0
+
+  .row
+    .col-md-6
+      .portlet.box.purple
+        .portlet-title
+          .caption
+            span.caption-subject.font-dark.bold.uppercase Declines
+        .portlet-body.form
+          table.table.table-condensed.table-details
+            tbody
+              tr
+                td Declines - Total
+                td = number_to_currency @sales.declined.sum(:purchase_price)
+              tr
+                td No of Units
+                td = @sales.declined.count
+              tr
+                td Declines %
+                td = @sales.declined.count * 100 / @sales.count
+
+

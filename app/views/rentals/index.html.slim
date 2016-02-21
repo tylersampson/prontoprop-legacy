@@ -1,0 +1,41 @@
+- content_for :title, I18n.t('listing', name: Rental.model_name.human)
+- content_for :actions do
+  = form_tag import_rentals_path, { multipart: true , class: 'form-inline' } do
+    = file_field_tag :file, class: 'form-control'
+    = submit_tag "PayProp Import", class: 'btn btn-info'
+    
+- content_for :breadcrumbs do
+  li = Rental.model_name.human(count: 2)
+.table-actions
+  .search
+    = search_form_for @q, html: { class: 'form-inline' } do |f|
+      .form-group
+        = f.select :lease_property_id_in, options_for_selectize(Property.where(id: params[:q].try(:[], :property_id_in))), { include_blank: "Property" }, multiple: true, data: { remote: properties_path, search: 'name_or_code_cont', fields: ['name', 'code'], label: 'name', value: 'id' }
+      .form-group
+        = f.date_select :date_received_cont, class: 'form-control', placeholder: Rental.human_attribute_name(:date_received)      
+      = f.submit I18n.t('search'), class: 'btn btn-primary'
+      = link_to I18n.t('reset'), '?', class: 'btn btn-default'
+  .table-navigation
+    = page_entries_info @rentals
+    = will_paginate @rentals, renderer: BootstrapPagination::Rails, class: 'pagination-sm pull-right', style: 'margin: 0px'
+.panel.panel-default
+  table.table.table-hover.table-bordered
+    thead
+      tr
+        th = sort_link(@q, :lease_property_name, Property.model_name.human)
+        th = sort_link(@q, :date_received, Rental.human_attribute_name(:date_received))
+        th.text-right = sort_link(@q, :amount_received, Rental.human_attribute_name(:amount_received))
+        th.text-right = sort_link(@q, :commission, Rental.human_attribute_name(:commission))
+        th.text-right = sort_link(@q, :vat, Rental.human_attribute_name(:vat))
+        th.text-right = sort_link(@q, :fees, Rental.human_attribute_name(:fees))
+        th.text-right = Rental.human_attribute_name(:nett)
+    tbody
+      - @rentals.each do |rental|
+        tr
+          td = link_to rental.lease.property.name, rental_path(rental)
+          td = rental.date_received
+          td.text-right = number_to_currency(rental.amount_received)
+          td.text-right = number_to_currency(rental.commission)
+          td.text-right = number_to_currency(rental.vat)
+          td.text-right = number_to_currency(rental.fees)
+          td.text-right = number_to_currency(rental.commission - rental.vat - rental.fees)

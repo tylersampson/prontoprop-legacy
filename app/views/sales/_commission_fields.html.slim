@@ -1,0 +1,42 @@
+= f.hidden_field :agent_id
+.portlet.box.green data-behavior="agent"
+  .portlet-title
+    .caption
+      span.caption-subject.font-dark.bold.uppercase
+        = f.object.agent.name
+  .portlet-body
+    table.table.table-condensed.table-hover
+      thead
+        tr
+          th Description
+          th.text-right style="width:20%" Amount
+      tbody
+        tr
+          td 
+            | Gross Commission @ 
+            = f.hidden_field :commission_percent
+            span data-behavior="commission_percent" = f.object.commission_percent
+            | %
+          td.text-right
+            = f.hidden_field :gross_amount
+            span data-behavior="gross_amount" = f.object.gross_amount            
+        tr
+          td 
+            | Tax @ 
+            = f.hidden_field :tax_percent
+            span data-behavior="tax_percent" = f.object.tax_percent
+            | %
+          td.text-right
+            = f.hidden_field :total_tax
+            span data-behavior="total_tax"  
+              = f.object.total_tax
+        tr
+          td Nett Commission
+          td.text-right
+            = f.hidden_field :nett_amount
+            strong data-behavior="nett_amount" 
+              = f.object.nett_amount
+    
+    = f.fields_for :deductions do |df|
+      = render 'sales/deduction_fields', f: df
+    = link_to_add_fields 'Add deductions', f, :deductions
