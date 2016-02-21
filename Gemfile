@@ -72,7 +72,7 @@ gem 'prawn-table'
 gem 'prawn-rails'
 
 gem 'apartment'
-
+gem 'unicorn'
 group :development do
   gem 'capistrano'
   gem 'capistrano-bundler'
