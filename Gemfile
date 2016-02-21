@@ -72,3 +72,12 @@ gem 'prawn-table'
 gem 'prawn-rails'
 
 gem 'apartment'
+
+group :development do
+  gem 'capistrano'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv', github: "capistrano/rbenv"
+  gem 'capistrano-unicorn-nginx'
+  gem 'capistrano-bower'
+end

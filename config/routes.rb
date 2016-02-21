@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     resources :agents do
       resources :commissions do
         collection do
-          get 'statement' 
+          get 'statement'
           patch 'pay_all'
         end
         member do
@@ -38,9 +38,12 @@ Rails.application.routes.draw do
     resources :originators
     resources :attorneys
     resources :attorneys
-    devise_for :users
-    root 'dashboards#show'
+
+    get '/' => 'dashboards#show'
   end
+
+  devise_for :users
+  root 'application#show'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

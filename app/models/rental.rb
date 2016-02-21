@@ -1,13 +1,15 @@
 class Rental < ActiveRecord::Base
+  has_paper_trail
+
   belongs_to :lease
   has_many :commissions, as: :commissionable
-  
+
   before_save :calculate_commissions
-  
+
   def description
     "RENTAL (#{lease.managed? ? 'Managed' : 'Unmanaged'}) - #{lease.property.name}"
   end
-  
+
   def self.import(file)
     total_imported = 0
     CSV.foreach(file.path, headers: true) do |row|
@@ -21,7 +23,7 @@ class Rental < ActiveRecord::Base
           rental.commission = row['AfterSplitAmount'].to_f
           rental.vat = row['AfterSplitAmountVAT'].to_f
           rental.fees = row['ServiceFee'].to_f
-          rental.import_id ||= row['PaymentRecordID'] 
+          rental.import_id ||= row['PaymentRecordID']
           rental.code ||= row['PaymentRecordID']
           rental.save!
           total_imported += 1
@@ -30,7 +32,7 @@ class Rental < ActiveRecord::Base
     end
     total_imported
   end
-  
+
   protected
 
   def calculate_commissions
@@ -43,7 +45,7 @@ class Rental < ActiveRecord::Base
       agent_nett = agent_gross - agent_tax
 
       self.commissions.build(
-        agent_id: ap.agent_id,        
+        agent_id: ap.agent_id,
         commission_percent: ap.commission_percent,
         gross_amount: agent_gross,
         tax_percent: ap.agent.tax,

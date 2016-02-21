@@ -2,17 +2,26 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-        
-    can :read, Sale
-    can :update, Sale, status: { access: 2..4 }
-    can :create, Sale
-    can :destroy, Sale, status: { access: 4 }
-    
-    can :manage, Agent
-    can :manage, Status
-    can :manage, Property
-    can :manage, Deductable
-    can :manage, :all
+
+    if user.role == 'Admin'
+      can :manage, :all
+    else
+      can :read, Sale
+      can :update, Sale, status: { access: 2..4 }
+      can :create, Sale
+      can :destroy, Sale, status: { access: 4 }
+
+      can :manage, Property
+      can :manage, Rental
+      can :manage, Comment
+
+      readble_entities = %w{Address Agent AgentProperty Attorney Bank Deductable Originator Status}
+
+      readble_entities.each do |r|
+        can :read, r.constantize
+      end
+    end
+
     #can :manage, :all
     # Define abilities for the passed in user here. For example:
     #
