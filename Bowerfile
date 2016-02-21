@@ -1,3 +1,4 @@
+asset 'jquery', '1.10.1'
 asset 'angular'
 asset 'angular-resource'
 asset 'bootstrap-datepicker'
