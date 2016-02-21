@@ -1,0 +1,12 @@
+h1 New Account
+= bootstrap_form_for(@user, url: user_registration_path, html: { method: :post }) do |f|
+  = f.email_field :email, autofocus: true
+  = f.password_field :password
+  = f.password_field :password_confirmation
+  = f.fields_for :account do |af|
+    = af.text_field :name
+    = af.text_field :database
+
+  = f.submit 'Create Account'
+
+= render "devise/shared/links"

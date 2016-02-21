@@ -1,6 +1,18 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
+
+  before_filter :set_mailer_host
+  before_filter :check_user_account, if: :current_user
+
+  def set_mailer_host
+    ActionMailer::Base.default_url_options[:host] = request.host_with_port
+  end
+
+  def check_user_account
+    redirect_to root_url(subdomain: current_user.account.database) if request.subdomain != current_user.account.database
+  end
+
   protect_from_forgery with: :exception
 
   before_filter :authenticate_user!

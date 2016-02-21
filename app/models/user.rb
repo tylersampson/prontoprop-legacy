@@ -6,6 +6,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable
 
+  belongs_to :account
+  accepts_nested_attributes_for :account
+
   def self.current_id=(id)
     Thread.current[:user_id] = id
   end
