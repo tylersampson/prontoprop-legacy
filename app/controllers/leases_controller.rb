@@ -4,7 +4,7 @@ class LeasesController < ApplicationController
 
   # GET /leases
   def index
-    @q = Lease.all.search(params[:q])
+    @q = @property.leases.search(params[:q])
     @leases = @q.result.paginate(page: params[:page], per_page: params[:fetch]).decorate
   end
 

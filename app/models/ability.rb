@@ -11,9 +11,9 @@ class Ability
       can :create, Sale
       can :destroy, Sale, status: { access: 4 }
 
-      can :manage, Property
-      can :manage, Rental
+      can :manage, Property, listing_type: 'Sale'
       can :manage, Comment
+
 
       readble_entities = %w{Address Agent AgentProperty Attorney Bank Deductable Originator Status}
 
