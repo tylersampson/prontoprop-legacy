@@ -80,3 +80,5 @@ group :development do
   gem 'capistrano-rbenv', github: "capistrano/rbenv"
   gem 'capistrano-unicorn-nginx'
 end
+
+gem 'rollbar', '~> 2.8.3'

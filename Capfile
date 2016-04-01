@@ -8,6 +8,8 @@ require 'capistrano/bundler'
 require 'capistrano/rails'
 require 'capistrano/rbenv'
 require 'capistrano/unicorn_nginx'
+
+require 'rollbar/capistrano3'
 # Include tasks from other gems included in your Gemfile
 #
 # For documentation on these, see for example:
