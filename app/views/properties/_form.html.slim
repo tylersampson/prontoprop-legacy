@@ -7,7 +7,6 @@
             span.caption-subject.font-dark.bold.uppercase = Property.model_name.human
         .portlet-body.form
           .form-body
-            = f.text_field :code
             = f.text_field :name            
             = f.select :listing_type, ['Sale', 'Rental']
             = f.text_field :external_id           

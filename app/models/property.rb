@@ -13,7 +13,7 @@ class Property < ActiveRecord::Base
 
   has_many :leases
 
-  validates :code, :name, presence: true
+  validates :name, presence: true
 
   def cached_owner
     @cached_owner ||= Contact.cached_find(owner_id)
