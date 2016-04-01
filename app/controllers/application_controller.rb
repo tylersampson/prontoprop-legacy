@@ -20,11 +20,11 @@ class ApplicationController < ActionController::Base
   around_filter :scope_current_user, if: :current_user
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to :back, :alert => exception.message
+    redirect_to root_path, :alert => exception.message
   end
 
   rescue_from ActiveRecord::InvalidForeignKey do
-    redirect_to :back, :alert => "You can't delete resources that are being used somewhere else"
+    redirect_to root_path, :alert => "You can't delete resources that are being used somewhere else"
   end
 
   protected
