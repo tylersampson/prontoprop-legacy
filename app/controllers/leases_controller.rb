@@ -23,7 +23,7 @@ class LeasesController < ApplicationController
   # POST /leases
   def create
     if @lease.save
-      redirect_to params[:commit_and_new] ? new_lease_path : @lease, notice: 'Lease was successfully created.'
+      redirect_to params[:commit_and_new] ? new_property_lease_path(@property) : property_lease_path(@property, @lease), notice: 'Lease was successfully created.'
     else
       render :new
     end
@@ -32,7 +32,7 @@ class LeasesController < ApplicationController
   # PATCH/PUT /leases/1
   def update
     if @lease.update(lease_params)
-      redirect_to @lease, notice: 'Lease was successfully updated.'
+      redirect_to property_lease_path(@property, @lease), notice: 'Lease was successfully updated.'
     else
       render :edit
     end
@@ -41,14 +41,11 @@ class LeasesController < ApplicationController
   # DELETE /leases/1
   def destroy
     @lease.destroy
-    redirect_to leases_url, notice: 'Lease was successfully destroyed.'
+    redirect_to property_leases_url(@property), notice: 'Lease was successfully destroyed.'
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_lease
-      @lease = Lease.find(params[:id])
-    end
+        
 
     # Only allow a trusted parameter "white list" through.
     def lease_params
