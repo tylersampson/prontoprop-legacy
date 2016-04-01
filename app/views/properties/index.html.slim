@@ -16,7 +16,6 @@
             - if can? :update, Property
               th.text-center style="width:95px;" = I18n.t('actions')
             th = sort_link(@q, :listing_type, Property.human_attribute_name(:listing_type))
-            th = sort_link(@q, :code, Property.human_attribute_name(:code))
             th = sort_link(@q, :name, Property.human_attribute_name(:name))
             th = sort_link(@q, :owner, Property.human_attribute_name(:owner))
             th = sort_link(@q, :address_suburb, Address.human_attribute_name(:suburb))
@@ -39,7 +38,6 @@
                       - if can? :destroy, property
                         li = link_to icon('times font-red', I18n.t('delete')), property_path(property), method: :delete, data: { confirm: 'Are you sure?' }                  
               td = property.listing_type
-              td = link_to property.code, property_path(property)
               td = link_to property.name, property_path(property)
               td = property.owner_name          
               td = property.suburb

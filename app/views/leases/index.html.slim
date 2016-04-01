@@ -13,7 +13,6 @@
       tr
         - if can? :update, Lease
           th.text-center style="width:95px;" = I18n.t('actions')
-        th = sort_link(@q, :code, Lease.human_attribute_name(:code))
         th = sort_link(@q, :property, Lease.human_attribute_name(:property))        
         th = sort_link(@q, :managed, Lease.human_attribute_name(:managed))   
         th = sort_link(@q, :start_on, Lease.human_attribute_name(:start_on))
@@ -33,7 +32,6 @@
                   li = link_to icon('pencil', I18n.t('edit')), edit_property_lease_path(@property, lease)
                   - if can? :destroy, lease
                     li = link_to icon('times font-red', I18n.t('delete')), property_lease_path(@property, lease), method: :delete, data: { confirm: 'Are you sure?' }
-          td = link_to lease.code, property_lease_path(@property, lease)
           td = lease.property.name          
           td.text-center = icon(lease.managed? ? 'check-circle text-success' : 'times-circle text-danger')
           td = lease.start_on
