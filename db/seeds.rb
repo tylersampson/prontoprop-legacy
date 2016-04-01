@@ -5,7 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-user = User.new(email: 'tyler_sampson@tresblue.com', password: 'test1234')
+require 'securerandom'
+random_string = SecureRandom.hex[0..8]
+
+user = User.new(email: 'admin@prontoprop.com', password: random_string, role: 'Admin')
 user.skip_confirmation!
 user.save
 
