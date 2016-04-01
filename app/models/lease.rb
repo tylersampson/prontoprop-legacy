@@ -6,4 +6,6 @@ class Lease < ActiveRecord::Base
   
   has_many :agent_leases
   has_many :agents, through: :agent_leases
+
+  validates :rent_amount, :status_id, presence: true
 end
