@@ -4,7 +4,7 @@
   = link_to icon('info-circle', I18n.t('show')), @lease, class: 'btn btn-primary btn-fit-height'
 - content_for :breadcrumbs do
   li = link_to Lease.model_name.human(count: 2), property_leases_path(@property)
-  li = link_to @lease.code, @lease
+  li = link_to @lease.code, [@property, @lease] 
   li = I18n.t('editing', name: 'lease')
 
 = render 'form'
