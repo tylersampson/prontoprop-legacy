@@ -1,7 +1,7 @@
 .row
   .col-sm-8    
     = f.select :agent_id, options_for_selectize(f.object.agent), { include_blank: "Agent" }, data: { remote: agents_path, search: 'first_name_or_last_name_or_code_cont', fields: ['first_name', 'last_name'], label: 'name', value: 'id' }
-    = f.text_field :commission_percent, layout: :default, placeholder: '%'  
+    = f.text_field :commission_percent, placeholder: '%'  
   .col-sm-4
     = f.hidden_field :_destroy
     = link_to icon('times text-red'), '#', class: 'btn btn-sm btn-danger remove_fields'
